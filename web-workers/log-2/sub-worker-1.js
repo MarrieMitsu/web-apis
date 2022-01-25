@@ -6,5 +6,5 @@ onmessage = function(e) {
         while((new Date - start) / 1000 < msg.duration + 1);
     }
 
-    postMessage(`sub-1: ${msg.duration + 1}`);
+    postMessage(`[sub-1]${msg.name}: ${msg.duration * 2 + 1}`);
 }

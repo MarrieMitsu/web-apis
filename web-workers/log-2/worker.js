@@ -1,6 +1,5 @@
 onmessage = function(e) {
     const msg = e.data;
-    const arr = [];
 
     const subWorker1 = new Worker('sub-worker-1.js');
     const subWorker2 = new Worker('sub-worker-2.js');
@@ -8,19 +7,26 @@ onmessage = function(e) {
     // listen message
     subWorker1.onmessage = function(e) {
         const subMsg = e.data;
-        arr.push(subMsg);
-        postMessage(arr);
+        postMessage(subMsg);
     }
     subWorker2.onmessage = function(e) {
         const subMsg = e.data;
-        arr.push(subMsg);
-        postMessage(arr);
+        postMessage(subMsg);
     }
 
     // do task
     const start = new Date();
 
-    subWorker1.postMessage(msg);
-    subWorker2.postMessage(msg);
+    if (!isNaN(msg.duration)) {
+        while((new Date - start) / 1000 < msg.duration);
+    }
+
+    if (msg.subCluster === 1) {
+        console.log('run sub-cluster 1');
+        subWorker1.postMessage(msg);
+    } else if (msg.subCluster === 2) {
+        console.log('run sub-cluster 2');
+        subWorker2.postMessage(msg);
+    }
 
 }
