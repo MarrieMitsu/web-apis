@@ -9,10 +9,32 @@ onmessage = function(e) {
         const subMsg = e.data;
         postMessage(subMsg);
     }
+
+    // listen error message
+    subWorker1.onmessageerror = function(e) {
+        console.error(`[message-error: sub-cluster-1]: ${e}`);
+    }
+
+    // listen error
+    subWorker1.onerror = function(e) {
+        console.log('error occurred on sub-cluster-1');
+    }
+
     subWorker2.onmessage = function(e) {
         const subMsg = e.data;
         postMessage(subMsg);
     }
+
+    // listen error message
+    subWorker2.onmessageerror = function(e) {
+        console.error(`[message-error: sub-cluster-2]: ${e}`);
+    }
+
+    // listen error
+    subWorker2.onerror = function(e) {
+        console.log('error occurred on sub-cluster-2');
+    }
+
 
     // do task
     const start = new Date();

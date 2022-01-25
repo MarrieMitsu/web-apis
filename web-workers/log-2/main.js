@@ -40,6 +40,16 @@ function main() {
             paragraph.textContent = msg;
         }
 
+        // listen error message
+        worker.onmessageerror = function(e) {
+            console.error(`[message-error]: ${e}`);
+        }
+
+        // listen error
+        worker.onerror = function(e) {
+            console.log('error occurred');
+        }
+
         // do task
         console.log('first manual init')
         paragraph.textContent = 'Task 1';
